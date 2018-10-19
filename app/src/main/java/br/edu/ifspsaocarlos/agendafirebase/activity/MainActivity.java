@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity{
 
 
             empty.setText(getResources().getString(R.string.lista_vazia));
-            fab.setVisibility(View.VISIBLE);
+            fab.show();
         }
         else {
 
