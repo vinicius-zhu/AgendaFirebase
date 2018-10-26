@@ -41,7 +41,7 @@ public class DetalheActivity extends AppCompatActivity {
             FirebaseID=getIntent().getStringExtra("FirebaseID");
 
 
-            ValueEventListener refContatoListener = databaseReference.child(FirebaseID).addValueEventListener(new ValueEventListener() {
+              databaseReference.child(FirebaseID).addValueEventListener(new ValueEventListener() {
 
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
@@ -67,12 +67,7 @@ public class DetalheActivity extends AppCompatActivity {
 
                 }
 
-
-
             });
-
-
-
 
         }
 
