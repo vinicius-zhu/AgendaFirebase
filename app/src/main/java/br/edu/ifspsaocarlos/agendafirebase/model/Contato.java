@@ -7,6 +7,7 @@ public class Contato {
     private String nome;
     private String fone;
     private String email;
+    private int categoria;
 
     public Contato()
     {
@@ -29,6 +30,12 @@ public class Contato {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public int getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(int categoria) {
+        this.categoria = categoria;
     }
 }
 

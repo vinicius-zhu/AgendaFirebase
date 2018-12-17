@@ -21,6 +21,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -229,14 +230,15 @@ public class MainActivity extends AppCompatActivity{
         }
         else {
 
+            query = databaseReference.orderByChild("nome").startAt(nomeContato).endAt(nomeContato+"\uf8ff");
+            options = new FirebaseRecyclerOptions.Builder<Contato>().setQuery(query, Contato.class).build();
+            adapter = new ContatoAdapter(options);
+            recyclerView.setAdapter(adapter);
+            adapter.startListening();
 
-             //EXERCICIO: insira aqui o código para buscar somente os contatos que atendam
-            //           ao criterio de busca digitado pelo usuário na SearchView.
-
-
-
+            empty.setText(getResources().getString(R.string.lista_vazia));
+            fab.show();
         }
-
      }
 
     private void setupRecyclerView() {
@@ -299,6 +301,40 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.todos:
+                query = databaseReference.orderByChild("nome");
+                break;
+            case R.id.amigos:
+                query = databaseReference.orderByChild("categoria").equalTo(0);
+                break;
+            case R.id.familia:
+                query = databaseReference.orderByChild("categoria").equalTo(1);
+                break;
+            case R.id.trabalho:
+                query = databaseReference.orderByChild("categoria").equalTo(2);
+                break;
+            case R.id.outro:
+                query = databaseReference.orderByChild("categoria").equalTo(3);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        options = new FirebaseRecyclerOptions.Builder<Contato>().setQuery(query, Contato.class).build();
+
+        adapter = new ContatoAdapter(options);
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+
+        return true;
+    }
+
+
 
     protected void onStart() {
         super.onStart();
@@ -319,6 +355,7 @@ public class MainActivity extends AppCompatActivity{
         adapter.stopListening();
 
     }
+
 
 
 }
